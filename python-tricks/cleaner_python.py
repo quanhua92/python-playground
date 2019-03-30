@@ -119,10 +119,75 @@ def managed_file(name):
 with managed_file(temp_path) as f:
     f.write("hello")
     
-        
-        
-        
-        
+# ----------------------------------------
+# Underscores, Dunders ...
 
+# 1. Single Leading Underscore: _var : hint for internal use
+    
+class Test_var:
+    def __init__(self):
+        self.foo = 11
+        self._bar = 23
 
+# 2. Single Trailing Underscore: var_ : use for breaking the naming conflict
+    
+def make_object(name, class_): # class is a keyword in Python
+    pass
+        
+# 3. Double Leading Underscore: __var: name mangling - the interpreter changes
+# the name of variable to make it harder to create collisions when the class
+# is extended later
 
+class Test__var:
+    def __init__(self):
+        self.foo = 11
+        self._bar = 23
+        self.__baz = 42
+
+t = Test__var()
+print(dir(t)) # __baz becomes _Test__var__baz
+
+class ExtendedTest__var(Test__var):
+    def __init__(self):
+        super().__init__()
+        self.__baz = "overridden"
+        
+t2 = ExtendedTest__var()
+print(dir(t2)) # '_ExtendedTest__var__baz', '_Test__var__baz',
+
+print('_ExtendedTest__var__baz ', t2._ExtendedTest__var__baz) # overriden
+print('_Test__var__baz ', t2._Test__var__baz) # 42
+        
+# 4. Double Leading and Trailing Underscore: __var__ - reserved for special
+# use in the language - it's best to stay away from this
+
+        
+# ----------------------------------------
+# String formatting
+
+# 1. Old style
+errno = 50159747054
+name = "Bob"
+
+print("Hello, %s" % name) # Hello, Bob
+print("%x" % errno) # badc0ffee
+
+print("Hey %(name)s, there is 0x%(errno)x error!" % {
+        "name": name,
+        "errno" : errno
+        })
+    
+# 2. New style
+
+print("Hello, {}".format(name)) # Hello, Bob
+
+print("Hey {name}, there is a 0x{errno:x} error!".format(
+        name=name, errno=errno))
+
+# 3. Literal String Interpolation (Python 3.6)
+print(f"Hello, {name}!")
+print(f"Five plus ten is {5 + 10} and not {2 * (5 + 10)}")
+
+# ----------------------------------------
+# "The Zen of Python"
+import this
