@@ -49,9 +49,13 @@ def assign_data(centroids: Sequence[Point], data: Iterable[Point]) -> Dict[Centr
     return dict(d)
 
 
+def transpose(data):
+    return list(zip(*data))
+
+
 def compute_centroids(groups: Iterable[Sequence[Point]]) -> List[Centroid]:
     'Compute the centroid of each group'
-    return [tuple(map(mean, zip(*group))) for group in groups]
+    return [tuple(map(mean, transpose(group))) for group in groups]
 
 
 def k_means(data: Iterable[Point], k: int=2, iterations: int=50) -> List[Centroid]:
@@ -78,6 +82,6 @@ centroids = k_means(points, k=3)
 d = assign_data(centroids, points)
 # -
 
-pprint(d, width=60)
+pprint(d, width=50)
 
 
