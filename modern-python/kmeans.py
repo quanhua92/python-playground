@@ -67,21 +67,18 @@ def k_means(data: Iterable[Point], k: int=2, iterations: int=50) -> List[Centroi
     return centroids
 
 
-# +
-points = [
-    (10, 41, 23),
-    (22, 30, 29),
-    (11, 42, 5),
-    (20, 32, 4),
-    (12, 40, 12),
-    (21, 36, 23),
-]
+if __name__ == "__main__":
+    points = [
+        (10, 41, 23),
+        (22, 30, 29),
+        (11, 42, 5),
+        (20, 32, 4),
+        (12, 40, 12),
+        (21, 36, 23),
+    ]
 
-centroids = k_means(points, k=3)
+    centroids = k_means(points, k=3)
 
-d = assign_data(centroids, points)
-# -
-
-pprint(d, width=50)
-
-
+    d = assign_data(centroids, points)
+    
+    pprint(d, width=50)
